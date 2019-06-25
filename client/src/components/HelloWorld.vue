@@ -19,8 +19,9 @@ export default {
     }
   },
   created () {
-    axios.get('http://localhost:8888').then(res => {
-      this.msg = res.data.message
+    axios.get('https://7vr72spqg7.execute-api.ap-northeast-1.amazonaws.com/Prod/hello/yujiariyasu?age=3').then(res => {
+      console.log(res)
+      this.msg = res.data.personName
     }).catch(err => {
       console.error(err)
     })

@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: 'server
+
+  Sample SAM Template for server
+
+  '
+Globals:
+  Api:
+    Cors:
+      AllowHeaders: '''Content-Type,Authorization,X-Amz-Date,X-Api-Key,X-Amz-Security-Token'''
+      AllowMethods: '''DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'''
+      AllowOrigin: '''*'''
+  Function:
+    Timeout: 5
+Resources:
+  HelloWorldFunction:
+    Properties:
+      CodeUri: s3://vue-go-test/d558f03729a39e3a13acaf60a7a59c75
+      Events:
+        CatchAll:
+          Properties:
+            Method: GET
+            Path: /hello/{personName}
+          Type: Api
+      Handler: hello-world
+      Runtime: go1.x
+      Tracing: Active
+    Type: AWS::Serverless::Function
+Transform: AWS::Serverless-2016-10-31
