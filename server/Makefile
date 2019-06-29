@@ -8,6 +8,8 @@ clean:
 
 build:
 		GOOS=linux GOARCH=amd64 go build -o hello-world/hello-world ./hello-world
+		GOOS=linux GOARCH=amd64 go build -o task-register/task-register ./task-register
+		GOOS=linux GOARCH=amd64 go build -o task-fetcher/task-fetcher ./task-fetcher
 # 複数のLambdaを用意する場合はここにビルド対象を追加していく
 
 packege:
@@ -21,3 +23,5 @@ deploy:
 
 deploy:
 		sam deploy --template-file output-template.yaml --stack-name vue-go-test --capabilities CAPABILITY_IAM --profile yujiariyasu
+
+

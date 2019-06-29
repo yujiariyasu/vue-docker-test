@@ -2,6 +2,7 @@ module server
 
 require (
 	github.com/aws/aws-lambda-go v1.11.1
+	github.com/aws/aws-sdk-go v1.20.8
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect
 	github.com/fatih/color v1.7.0 // indirect
 	github.com/fsnotify/fsnotify v1.4.7 // indirect
