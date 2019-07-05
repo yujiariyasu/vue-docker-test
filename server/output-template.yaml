@@ -15,7 +15,7 @@ Globals:
 Resources:
   HelloWorldFunction:
     Properties:
-      CodeUri: s3://vue-go-test/ead15ce2b0e9a1337783d7422a42fd16
+      CodeUri: s3://vue-go-test/4592dd22a4ea79037627e402f442f523
       Events:
         CatchAll:
           Properties:
@@ -28,12 +28,12 @@ Resources:
     Type: AWS::Serverless::Function
   TaskFetcherFunction:
     Properties:
-      CodeUri: s3://vue-go-test/ff5c2f5d95fd81a4e359a052b09a6efd
+      CodeUri: s3://vue-go-test/87ebf2389fef2e24a80c114729736ccb
       Events:
         CatchAll:
           Properties:
             Method: GET
-            Path: /users/{userID}/tasks
+            Path: /users/{userName}/tasks
           Type: Api
       Handler: task-fetcher
       Policies: AmazonDynamoDBReadOnlyAccess
@@ -42,7 +42,7 @@ Resources:
     Type: AWS::Serverless::Function
   TaskRegisterFunction:
     Properties:
-      CodeUri: s3://vue-go-test/f60653fcf1a255578eded76e6ed94695
+      CodeUri: s3://vue-go-test/674f55f293e5ed7c9911f92b5907118e
       Events:
         CatchAll:
           Properties:

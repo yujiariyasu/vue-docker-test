@@ -12,8 +12,7 @@ import (
 )
 
 func index(request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-	userID := request.PathParameters["userID"]
-	taskID := request.QueryStringParameters["ID"]
+	userName := request.PathParameters["userName"]
 
 	session, err := session.NewSession()
 	conn := dynamodb.New(session)
@@ -26,14 +25,11 @@ func index(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespons
 			"#UserName": aws.String("UserName"),
 		},
 		ExpressionAttributeValues: map[string]*dynamodb.AttributeValue{
-			":userID": {
-				S: aws.String(userID),
-			},
-			":id": {
-				S: aws.String(taskID),
+			":userName": {
+				S: aws.String(userName),
 			},
 		},
-		KeyConditionExpression: aws.String("#UserID=:userID AND #ID=:id"),
+		KeyConditionExpression: aws.String("#UserName=:userName"),
 		ProjectionExpression:   aws.String("#UserID, #ID, #UserName, #Name"),
 	})
 	if err != nil {
@@ -47,6 +43,11 @@ func index(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespons
 	jsonBytes, _ := json.Marshal(tasks)
 
 	return events.APIGatewayProxyResponse{
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin":  "*",
+			"Access-Control-Allow-Headers": "origin,Accept,Authorization,Content-Type",
+			"Content-Type":                 "application/json",
+		},
 		Body:       string(jsonBytes),
 		StatusCode: 200,
 	}, nil

@@ -17,16 +17,12 @@ func create(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 	if err := json.Unmarshal(byteBody, taskReq); err != nil {
 		fmt.Println("error: ", err)
 	}
-	userID := taskReq.UserID
 	userName := taskReq.UserName
-	taskID := taskReq.ID
 	taskName := taskReq.Name
 
 	// DynamoDBへ永続化
 	task := Task{
-		UserID:   userID,
 		UserName: userName,
-		ID:       taskID,
 		Name:     taskName,
 	}
 	av, err := dynamodbattribute.MarshalMap(task)
@@ -44,9 +40,13 @@ func create(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespon
 		fmt.Println("error: ", err)
 	}
 	fmt.Println(params)
-	fmt.Println("success!!")
 
 	return events.APIGatewayProxyResponse{
+		Headers: map[string]string{
+			"Access-Control-Allow-Origin":  "*",
+			"Access-Control-Allow-Headers": "origin,Accept,Authorization,Content-Type",
+			"Content-Type":                 "application/json",
+		},
 		Body:       string(byteBody),
 		StatusCode: 200,
 	}, nil
@@ -57,15 +57,11 @@ func main() {
 }
 
 type TaskRequest struct {
-	ID       string `json:"id"`
 	Name     string `json:"name"`
-	UserID   string `json:"userID"`
 	UserName string `json:"userName"`
 }
 
 type Task struct {
-	ID       string
 	Name     string
-	UserID   string
 	UserName string
 }
