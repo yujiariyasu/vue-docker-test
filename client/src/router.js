@@ -14,7 +14,7 @@ export default new Router({
       component: Home
     },
     {
-      path: '/users/:username',
+      path: '/users/:userName',
       name: 'user',
       // route level code-splitting
       // this generates a separate chunk (about.[hash].js) for this route
